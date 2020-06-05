@@ -1,9 +1,116 @@
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+#background {
+    background: rgb(250, 250, 250);
+    width: 1175px;
+    border: 15px solid rgb(85, 85, 155);
+    padding: 50px;
+    margin: 20px;
+    align-content: center;
+    border-radius: 10px;
 }
+
+#main-header{
+    font-size: 36pt;
+    text-decoration: underline;
+    text-indent: 70px;
+}
+
+#directory{
+    background: rgb(250, 250, 250);
+    width: 160px;
+    margin: 20px;
+    align-content: right;
+    /* border: 5px solid rgb(85, 85, 155); */
+}
+
+#content {
+    background: rgb(250, 250, 250);
+    width: 675px;
+    margin: 25px;
+    align-content: left;
+    /* border: 5px solid rgb(85, 85, 155); */
+}
+
+#my-image{
+    content:url("/images/self_image.jpg");
+    height: 325px;
+    width: 200px;
+    margin: 40px;
+    border-style: none;
+    box-shadow: 15px 20px 18px #888888;
+    align-content: right;
+
+    /* border: 5px solid rgb(85, 85, 155); */
+}
+
+.div-wrapper {
+    position: relative;
+    height: 460px;
+    width: 400px;
+}
+
+.div-wrapper img {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+}
+
+#link{
+    font-size: 14pt;
+}
+
+#input-box{
+    width: 675px;
+    height: 200px;
+    resize: none;
+    font-size: 14pt;
+    font-family: "Arial";
+}
+
+.column {        
+    height: 650px;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
 
 #greeting-container {
   margin-top: 20px;
+}
+
+#quote-container {
+  margin-top: 20px;
+}
+#list-of-comments {
+  list-style-type: decimal-leading-zero;
+}
+.center-justified {
+    margin: 0 auto;
+    width: 40em;
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+section{
+    font-style: bold;
+    font-size: x-large;
+}
+table, th, td {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 10px;
+}
+
+p {
+    line-height: 1.75;  
 }
