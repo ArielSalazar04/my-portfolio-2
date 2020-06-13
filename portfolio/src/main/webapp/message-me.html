@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Ariel Salazar: Portfolio Page</title>
         <link rel="stylesheet" href="style.css">
         <script src="script.js"></script>
     </head>
-    <body>
-        <div id="background">
-            <h1 id="main-header"> Ariel Salazar's Portfolio </h1>
-            <div class="row">
-                <div class="column">
-                    <div id="directory"> 
-                        <h1>Directory</h1>
+    <div id="background">
+        <h1 id="main-header"> Ariel Salazar's Portfolio </h1>
+        <div class="row">
+            <div class="column">
+                <div id="directory"> 
+                    <h1>Directory</h1>
                         <h2>Portfolio Links</h2>
                         <a id="link" href="index.html"> Introduction </a><br>
                         <a id="link" href="about-me.html"> About Me </a><br>
@@ -28,20 +27,22 @@
                         <h2>Others</h2>
                         <a id="link" href="favorite-quotes.html"> Favorite Quotes </a>
                         <a id="link" href="https://vignette.wikia.nocookie.net/meme/images/a/a0/DancingBanana.GIF/revision/latest?cb=20170301112148" target="_blank"> Favorite Meme </a><br>
-                    </div>
-                </div>
-                <div class="column">
-                    <div id="content"> 
-                        <h1>Favorite Quotes</h1>
-                        <h2>Click "Next" for the next quote</h2>
-                        <button onclick="getQuote()"> Next </button>
-                        <p id="quote-container"></p>
-                    </div>
-                </div>
-                <div class="div-wrapper">
-                    <img id="my-image"></img>
                 </div>
             </div>
+            <div class="column">
+                <div id="content"> 
+                    <h1 align="left">Message Me</h1>
+                    <h2 align = "left">Enter a message: </h2>
+                    <form action="/data" method="POST">
+                        <textarea id="input-box" name="text-input"></textarea>
+                        <br><br>
+                        <input type="submit" onclick="window.alert('Message sent successfully');">
+                    </form>
+                </div>
+            </div>
+            <div class="div-wrapper">
+                <img id="my-image"></img>
+            </div>
         </div>
-     </body>
+    </div>
 </html>
