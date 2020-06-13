@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Ariel Salazar: Portfolio Page</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js"></script>
+    </head>
+    <body onload="getHelloMessage()">
+        <div id="background">
+            <h1 id="main-header"> Ariel Salazar's Portfolio </h1>
+            <div class="row">
+                <div class="column">
+                    <div id="directory"> 
+                        <h1>Directory</h1>
+                        <h2>Portfolio Links</h2>
+                        <a id="link" href="index.html"> Introduction </a><br>
+                        <a id="link" href="about-me.html"> About Me </a><br>
+                        <h2>My Projects</h2>
+                        <a id="link" href="https://github.com/ArielSalazar04/" target="_blank"> GitHub </a><br>
+                        <h2>Contact Me</h2>
+                        <a id="link" href="https://www.linkedin.com/in/ariel-salazar-16a17716b" target="_blank"> LinkedIn </a><br>
+                        <h1>Interests</h1>
+                        <h2>Articles</h2>
+                        <a id="link" href="https://parkouredu.org/parkour-landing-kinematics/" target="_blank"> Parkour Roll </a><br>
+                        <a id="link" href="https://thecaregiverspace.org/billiards-to-cope-with-stress/" target="_blank"> Billiards </a><br>
+                        <h2>Others</h2>
+                        <a id="link" href="favorite-quotes.html"> Favorite Quotes </a>
+                        <a id="link" href="https://vignette.wikia.nocookie.net/meme/images/a/a0/DancingBanana.GIF/revision/latest?cb=20170301112148" target="_blank"> Favorite Meme </a><br>
+                    </div>
+                </div>
+                <div class="column">
+                    <div id="content"> 
+                        <h1>Favorite Quotes</h1>
+                        <h2>Click "Next" for the next quote</h2>
+                        <button onclick="getHelloMessage()"> Next </button>
+                        <p style="font-size:24px;" id="quote-container"></p>
+                    </div>
+                </div>
+                <div class="div-wrapper">
+                    <img id="my-image"></img>
+                </div>
+            </div>
+        </div>
+     </body>
+</html>
