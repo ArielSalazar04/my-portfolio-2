@@ -34,14 +34,6 @@
                     <div id="content"> 
                         <h1 align="left">Message Me</h1>
                         <h2 align = "left">Enter a message: </h2>
-                        <form action="/messages" method="POST">
-                            <textarea id="input-box" name="text-input"></textarea>
-                            <br><br>
-                            <input type="submit">
-                            <div> List of messages: </div>
-                            <ul id="message-list"></ul>
-                        </form><br>
-                        <br><br>
 
                         <select id="lang" name="lang">
                             <option value="en"> English </option>
@@ -54,6 +46,14 @@
                         <button onclick="getMessages()"> Translate! </button>
                         <br><br>
                         
+                        <form action="/messages" method="POST">
+                            <textarea id="input-box" name="text-input"></textarea>
+                            <br><br>
+                            <input type="submit">
+                            <br><br>
+                            <div> List of messages: </div>
+                            <ul id="message-list"></ul>
+                        </form><br>
                     </div>
                 </div>
                 <div class="div-wrapper">
