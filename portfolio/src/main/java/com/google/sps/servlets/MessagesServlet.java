@@ -32,9 +32,6 @@ public class MessagesServlet extends HttpServlet {
     @Override
     public void init(){
         messages = new ArrayList<>();
-        messages.add("Hello!");
-        messages.add("How are you?");
-        messages.add("Goodbye!");
     }
 
     @Override
@@ -47,6 +44,9 @@ public class MessagesServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        
+        String msg = request.getParameter("text-input").trim();
+        if (!msg.equals(""))
+            messages.add(msg);
+        response.sendRedirect("message-me.html");
     }
 }
