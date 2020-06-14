@@ -14,6 +14,10 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,6 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.Date;
 
 @WebServlet("/messages")
 public class MessagesServlet extends HttpServlet {
@@ -44,9 +50,15 @@ public class MessagesServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        String msg = request.getParameter("text-input").trim();
-        if (!msg.equals(""))
-            messages.add(msg);
+        String content = request.getParameter("text-input").trim();
+        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+        Entity messageEntity = new Entity("Message");
+        Date date = new Date(System.currentTimeMillis());
+
+        messageEntity.setProperty("content", content);
+        messageEntity.setProperty("timestamp", date);
+        datastore.put(messageEntity);
+
         response.sendRedirect("message-me.html");
     }
 }
