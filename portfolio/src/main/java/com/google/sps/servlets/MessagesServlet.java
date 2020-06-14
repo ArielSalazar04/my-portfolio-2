@@ -40,7 +40,16 @@ import java.util.Date;
 @WebServlet("/messages")
 public class MessagesServlet extends HttpServlet {
     
+<<<<<<< HEAD
     private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+=======
+    private List<String> messages;
+
+    @Override
+    public void init(){
+        messages = new ArrayList<>();
+    }
+>>>>>>> Implement doPost mechanism to MessagesServlet
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
@@ -69,6 +78,7 @@ public class MessagesServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
+<<<<<<< HEAD
         String content = request.getParameter("text-input").trim();
         Entity messageEntity = new Entity("Message");
         Date date = new Date(System.currentTimeMillis());
@@ -77,6 +87,11 @@ public class MessagesServlet extends HttpServlet {
         messageEntity.setProperty("timestamp", date);
         datastore.put(messageEntity);
 
+=======
+        String msg = request.getParameter("text-input").trim();
+        if (!msg.equals(""))
+            messages.add(msg);
+>>>>>>> Implement doPost mechanism to MessagesServlet
         response.sendRedirect("message-me.html");
     }
 }
