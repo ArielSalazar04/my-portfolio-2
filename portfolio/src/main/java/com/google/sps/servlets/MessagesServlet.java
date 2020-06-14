@@ -17,15 +17,13 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
-<<<<<<< HEAD
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+
 import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
-=======
->>>>>>> Messages are now posted to Datastore
 
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -56,10 +54,8 @@ public class MessagesServlet extends HttpServlet {
         
         for (Entity entity : results.asIterable()){
             String content = (String) entity.getProperty("content");
-
             Translation translation = translate.translate(content, Translate.TranslateOption.targetLanguage(languageCode));
             content = translation.getTranslatedText();
-
             messages.add(content);
         }
         
@@ -71,7 +67,7 @@ public class MessagesServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        String content = getParameter(request, "text-input", "");
+        String content = getParameter(request, "text-input", "").trim();
         Entity messageEntity = new Entity("Message");
         Date date = new Date(System.currentTimeMillis());
 
