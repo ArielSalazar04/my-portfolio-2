@@ -20,29 +20,28 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.List;
 
-import java.util.concurrent.ThreadLocalRandom;
+@WebServlet("/messages")
+public class MessagesServlet extends HttpServlet {
+    
+    private List<String> messages;
 
-/** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/data")
-public class DataServlet extends HttpServlet {
-    
-    private List<String> quotes;
-    
     @Override
     public void init(){
-        quotes = new ArrayList<>();
-        quotes.add("Courage is not having the strength to go on; it is going on when you don't have the strength.\n- Theodore Roosevelt");
-        quotes.add("It is not difficult to overcome your fears, you just have to know your weaknesses.\n- Rubén Rodríguez");
-        quotes.add("I never lose. I either win or I learn.\n- Nelson Mandela");
+        messages = new ArrayList<>();
+        messages.add("Hello!");
+        messages.add("How are you?");
+        messages.add("Goodbye!");
     }
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        String quote = quotes.get(ThreadLocalRandom.current().nextInt(0, quotes.size()));
-        response.setContentType("text/html; charset=utf-8");
-        response.getWriter().println(quote);
+        Gson gson = new Gson();
+        String json = gson.toJson(messages);
+        response.setContentType("application/json;");
+        response.getWriter().println(json);
     }
 }
