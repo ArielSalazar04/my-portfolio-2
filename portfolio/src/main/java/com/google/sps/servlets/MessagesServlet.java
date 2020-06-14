@@ -17,6 +17,9 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -33,16 +36,20 @@ import java.util.Date;
 @WebServlet("/messages")
 public class MessagesServlet extends HttpServlet {
     
-    private List<String> messages;
-
-    @Override
-    public void init(){
-        messages = new ArrayList<>();
-    }
+    private DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
         Gson gson = new Gson();
+        Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
+        PreparedQuery results = datastore.prepare(query);
+        List<String> messages = new ArrayList<>();
+        
+        for (Entity entity : results.asIterable()){
+            String content = (String) entity.getProperty("content");
+            messages.add(content);
+        }
+        
         String json = gson.toJson(messages);
         response.setContentType("application/json;");
         response.getWriter().println(json);
@@ -51,7 +58,6 @@ public class MessagesServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
         String content = request.getParameter("text-input").trim();
-        DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
         Entity messageEntity = new Entity("Message");
         Date date = new Date(System.currentTimeMillis());
 
