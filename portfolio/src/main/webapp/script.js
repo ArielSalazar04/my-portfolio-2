@@ -23,6 +23,7 @@ async function getQuote(){
     const quote = await response.text();
     document.getElementById("quote-container").innerText = quote;
 }
+
 async function getMessages(){
     const list = document.getElementById("message-list");
     list.innerText = "";
