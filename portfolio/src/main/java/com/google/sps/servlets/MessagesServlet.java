@@ -54,10 +54,8 @@ public class MessagesServlet extends HttpServlet {
         
         for (Entity entity : results.asIterable()){
             String content = (String) entity.getProperty("content");
-
             Translation translation = translate.translate(content, Translate.TranslateOption.targetLanguage(languageCode));
             content = translation.getTranslatedText();
-
             messages.add(content);
         }
         
