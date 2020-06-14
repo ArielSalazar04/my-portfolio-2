@@ -73,7 +73,7 @@ public class MessagesServlet extends HttpServlet {
         Entity messageEntity = new Entity("Message");
         Date date = new Date(System.currentTimeMillis());
 
-        String content = request.getParameter("text-input").trim();
+        String content = getParameter(request, "text-input", "").trim();
 
         Document doc =
         Document.newBuilder().setContent(content).setType(Document.Type.PLAIN_TEXT).build();
