@@ -23,13 +23,12 @@ async function getQuote(){
 }
 async function getMessages(){
     const list = document.getElementById("message-list");
-    if (list.innerHTML == ""){
-        const response = await fetch("/messages");
-        const messages = await response.json();
-        messages.forEach(function(item){
-            const listElement = document.createElement("li");
-            listElement.innerHTML = item;
-            list.appendChild(listElement);
-        })
-    }
+    const response = await fetch("/messages");
+    const messages = await response.json();
+    
+    messages.forEach(function(item){
+        const listElement = document.createElement("li");
+        listElement.innerHTML = item;
+        list.appendChild(listElement);
+    })
 }
