@@ -26,6 +26,11 @@ async function getQuote(){
 }
 async function getMessages(){
     const list = document.getElementById("message-list");
+    list.innerHTML = "";
+    const language = document.getElementById("lang").value;
+
+    const params = new URLSearchParams();
+    params.append('languageCode', language);
     fetch("/messages").then(response => response.json()).then((messages) => {
         messages.forEach(function(item){
             const listElement = document.createElement("li");
@@ -34,4 +39,3 @@ async function getMessages(){
         })
     });
 }
-
