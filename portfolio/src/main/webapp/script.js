@@ -19,13 +19,19 @@
 document.addEventListener("DOMContentLoaded", getQuote())
 
 async function getQuote(){
-    const response = await fetch("/data");
-    const quote = await response.text();
-    document.getElementById("quote-container").innerText = quote;
+    fetch("/data").then(response => response.text()).then((quote) => {
+        document.getElementById("quote-container").innerText = quote;
+    })
 }
 async function getMessages(){
     const list = document.getElementById("message-list");
-    fetch("/messages").then(response => response.json()).then((messages) => {
+    list.innerText = "";
+    const language = document.getElementById("lang").value;
+
+    const params = new URLSearchParams();
+    params.append('languageCode', language);
+
+    fetch("/messages?" + params.toString()).then(response => response.json()).then((messages) => {
         messages.forEach(function(item){
             const listElement = document.createElement("li");
             listElement.innerText = item;
@@ -33,4 +39,3 @@ async function getMessages(){
         })
     });
 }
-

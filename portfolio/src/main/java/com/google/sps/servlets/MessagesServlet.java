@@ -20,6 +20,9 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
 
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -40,6 +43,9 @@ public class MessagesServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        String languageCode = request.getQueryString().split("=")[1];
+        Translate translate = TranslateOptions.getDefaultInstance().getService();
+
         Gson gson = new Gson();
         Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
         PreparedQuery results = datastore.prepare(query);
@@ -47,11 +53,16 @@ public class MessagesServlet extends HttpServlet {
         
         for (Entity entity : results.asIterable()){
             String content = (String) entity.getProperty("content");
+
+            Translation translation = translate.translate(content, Translate.TranslateOption.targetLanguage(languageCode));
+            content = translation.getTranslatedText();
+
             messages.add(content);
         }
         
         String json = gson.toJson(messages);
-        response.setContentType("application/json;");
+
+        response.setContentType("application/json; charset=UTF-8");
         response.getWriter().println(json);
     }
 
