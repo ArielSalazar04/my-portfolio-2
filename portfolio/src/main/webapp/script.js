@@ -24,14 +24,15 @@ async function getQuote(){
         document.getElementById("quote-container").innerText = quote;
     });    
 }
+
 async function getMessages(){
     const list = document.getElementById("message-list");
-    list.innerHTML = "";
+    list.innerText = "";
     const language = document.getElementById("lang").value;
 
     const params = new URLSearchParams();
     params.append('languageCode', language);
-    fetch("/messages").then(response => response.json()).then((messages) => {
+    fetch("/messages?" + params.toString()).then(response => response.json()).then((messages) => {
         messages.forEach(function(item){
             const listElement = document.createElement("li");
             listElement.innerText = item;
