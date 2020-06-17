@@ -19,9 +19,9 @@
 document.addEventListener("DOMContentLoaded", getQuote())
 
 async function getQuote(){
-    const response = await fetch("/data");
-    const quote = await response.text();
-    document.getElementById("quote-container").innerText = quote;
+    fetch("/data").then(response => response.text()).then((quote) => {
+        document.getElementById("quote-container").innerText = quote;
+    })
 }
 
 async function getMessages(){
