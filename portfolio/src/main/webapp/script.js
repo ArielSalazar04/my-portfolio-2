@@ -23,7 +23,13 @@ async function getQuote(){
 }
 async function getMessages(){
     const list = document.getElementById("message-list");
-    const response = await fetch("/messages");
+    list.innerHTML = "";
+    const language = document.getElementById("lang").value;
+
+    const params = new URLSearchParams();
+    params.append('languageCode', language);
+
+    const response = await fetch("/messages?" + params.toString());
     const messages = await response.json();
     
     messages.forEach(function(item){
