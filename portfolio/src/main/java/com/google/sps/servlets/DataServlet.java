@@ -23,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
@@ -39,7 +41,7 @@ public class DataServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        String quote = quotes.get((int) (Math.random() * quotes.size()));
+        String quote = quotes.get(ThreadLocalRandom.current().nextInt(0, quotes.size()));
         response.setContentType("text/html; charset=utf-8");
         response.getWriter().println(quote);
     }
