@@ -16,6 +16,8 @@
  * Adds a random greeting to the page.
  */
 
+document.addEventListener("DOMContentLoaded", getQuote())
+
 async function getQuote(){
     const response = await fetch("/data");
     const quote = await response.text();
