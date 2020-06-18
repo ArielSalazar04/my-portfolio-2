@@ -88,6 +88,7 @@
 
 #quote-container {
   margin-top: 20px;
+  font-size:24px;
 }
 #list-of-comments {
   list-style-type: decimal-leading-zero;
