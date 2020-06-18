@@ -20,9 +20,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -46,5 +45,4 @@ public class DataServlet extends HttpServlet {
         response.setContentType("text/html; charset=utf-8");
         response.getWriter().println(quote);
     }
-    
 }
