@@ -16,8 +16,10 @@
  * Adds a random greeting to the page.
  */
 
+document.addEventListener("DOMContentLoaded", getHelloMessage())
+
 async function getHelloMessage(){
     const response = await fetch("/data");
-    const msg = await response.text();
-    document.getElementById("msg").innerText = msg;
+    const quote = await response.text();
+    document.getElementById("quote-container").innerText = quote;
 }
