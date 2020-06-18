@@ -16,10 +16,22 @@
  * Adds a random greeting to the page.
  */
 
-document.addEventListener("DOMContentLoaded", getHelloMessage())
+document.addEventListener("DOMContentLoaded", getQuote())
 
-async function getHelloMessage(){
+async function getQuote(){
     const response = await fetch("/data");
     const quote = await response.text();
     document.getElementById("quote-container").innerText = quote;
+}
+async function getMessages(){
+    const list = document.getElementById("message-list");
+    if (list.innerHTML == ""){
+        const response = await fetch("/messages");
+        const messages = await response.json();
+        messages.forEach(function(item){
+            const listElement = document.createElement("li");
+            listElement.innerHTML = item;
+            list.appendChild(listElement);
+        })
+    }
 }
