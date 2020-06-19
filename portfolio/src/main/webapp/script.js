@@ -30,7 +30,7 @@ async function getMessages(){
     
     messages.forEach(function(item){
         const listElement = document.createElement("li");
-        listElement.innerHTML = item;
+        listElement.innerText = item;
         list.appendChild(listElement);
     })
 }
