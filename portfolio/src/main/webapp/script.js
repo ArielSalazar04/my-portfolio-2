@@ -25,12 +25,11 @@ async function getQuote(){
 }
 async function getMessages(){
     const list = document.getElementById("message-list");
-    const response = await fetch("/messages");
-    const messages = await response.json();
-    
-    messages.forEach(function(item){
-        const listElement = document.createElement("li");
-        listElement.innerText = item;
-        list.appendChild(listElement);
-    })
+    fetch("/messages").then(response => response.json()).then((messages) => {
+        messages.forEach(function(item){
+            const listElement = document.createElement("li");
+            listElement.innerText = item;
+            list.appendChild(listElement);
+        })
+    });
 }
