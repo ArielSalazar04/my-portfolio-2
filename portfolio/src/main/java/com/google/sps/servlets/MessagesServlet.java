@@ -24,6 +24,9 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.cloud.translate.Translate;
 import com.google.cloud.translate.TranslateOptions;
 import com.google.cloud.translate.Translation;
+import com.google.cloud.language.v1.Document;
+import com.google.cloud.language.v1.LanguageServiceClient;
+import com.google.cloud.language.v1.Sentiment;
 
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -71,9 +74,20 @@ public class MessagesServlet extends HttpServlet {
         Entity messageEntity = new Entity("Message");
         Date date = new Date(System.currentTimeMillis());
 
-        messageEntity.setProperty("content", content);
-        messageEntity.setProperty("timestamp", date);
-        datastore.put(messageEntity);
+        String content = request.getParameter("text-input").trim();
+
+        Document doc =
+        Document.newBuilder().setContent(content).setType(Document.Type.PLAIN_TEXT).build();
+        LanguageServiceClient languageService = LanguageServiceClient.create();
+        Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
+        float score = sentiment.getScore();
+        languageService.close();
+
+        if (score > -0.5){
+            messageEntity.setProperty("content", content);
+            messageEntity.setProperty("timestamp", date);
+            datastore.put(messageEntity);
+        }
 
         response.sendRedirect("message-me.html");
     }
