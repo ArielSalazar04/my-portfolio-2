@@ -17,11 +17,12 @@
  */
 
 document.addEventListener("DOMContentLoaded", getQuote())
+document.addEventListener("DOMContentLoaded", getMessages())
 
 async function getQuote(){
-    const response = await fetch("/data");
-    const quote = await response.text();
-    document.getElementById("quote-container").innerText = quote;
+    fetch("/data").then(response => response.text()).then((quote) => {
+        document.getElementById("quote-container").innerText = quote;
+    });    
 }
 async function getMessages(){
     const list = document.getElementById("message-list");
