@@ -70,11 +70,9 @@ public class MessagesServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        String content = getParameter(request, "text-input", "").trim();
+        String content = request.getParameter("text-input").trim();
         Entity messageEntity = new Entity("Message");
         Date date = new Date(System.currentTimeMillis());
-
-        String content = request.getParameter("text-input").trim();
 
         Document doc =
         Document.newBuilder().setContent(content).setType(Document.Type.PLAIN_TEXT).build();
