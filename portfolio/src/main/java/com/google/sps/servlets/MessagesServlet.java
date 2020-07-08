@@ -20,6 +20,20 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
+
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
+
+import com.google.cloud.translate.Translate;
+import com.google.cloud.translate.TranslateOptions;
+import com.google.cloud.translate.Translation;
+import com.google.cloud.language.v1.Document;
+import com.google.cloud.language.v1.LanguageServiceClient;
+import com.google.cloud.language.v1.Sentiment;
 
 import java.io.IOException;
 import javax.servlet.annotation.WebServlet;
@@ -40,6 +54,9 @@ public class MessagesServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
+        String languageCode = getParameter(request, "languageCode", "");
+        Translate translate = TranslateOptions.getDefaultInstance().getService();
+
         Gson gson = new Gson();
         Query query = new Query("Message").addSort("timestamp", SortDirection.DESCENDING);
         PreparedQuery results = datastore.prepare(query);
@@ -47,11 +64,14 @@ public class MessagesServlet extends HttpServlet {
         
         for (Entity entity : results.asIterable()){
             String content = (String) entity.getProperty("content");
+            Translation translation = translate.translate(content, Translate.TranslateOption.targetLanguage(languageCode));
+            content = translation.getTranslatedText();
             messages.add(content);
         }
         
         String json = gson.toJson(messages);
-        response.setContentType("application/json;");
+
+        response.setContentType("application/json; charset=UTF-8");
         response.getWriter().println(json);
     }
 
@@ -63,9 +83,18 @@ public class MessagesServlet extends HttpServlet {
             Entity messageEntity = new Entity("Message");
             Date date = new Date(System.currentTimeMillis());
 
-            messageEntity.setProperty("content", content);
-            messageEntity.setProperty("timestamp", date);
-            datastore.put(messageEntity);
+            Document doc =
+            Document.newBuilder().setContent(content).setType(Document.Type.PLAIN_TEXT).build();
+            LanguageServiceClient languageService = LanguageServiceClient.create();
+            Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
+            float score = sentiment.getScore();
+            languageService.close();
+
+            if (score > -0.5){
+                messageEntity.setProperty("content", content);
+                messageEntity.setProperty("timestamp", date);
+                datastore.put(messageEntity);
+            }
         }
 
         response.sendRedirect("message-me.html");
