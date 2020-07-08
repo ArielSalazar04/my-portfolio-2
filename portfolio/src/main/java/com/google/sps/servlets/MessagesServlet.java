@@ -54,7 +54,7 @@ public class MessagesServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException{
-        String languageCode = request.getQueryString().split("=")[1];
+        String languageCode = getParameter(request, "languageCode", "");
         Translate translate = TranslateOptions.getDefaultInstance().getService();
 
         Gson gson = new Gson();
